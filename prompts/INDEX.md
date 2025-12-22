@@ -25,9 +25,15 @@ Quick reference for finding and discovering prompts in this repository.
   - Models: [gpt-5.2, claude-opus-4-5]
   - Variables: topic,audience,goal,
 
+- **[Persuasive Facebook Marketplace Listing](writing/facebook-marketplace-listing.md)**
+  - Description: Craft a truthful, persuasive classified ad using Cialdini’s principles to sell items quickly.
+  - Tags: [marketplace, sales, persuasion, listing]
+  - Models: [gpt-5.2, claude-opus-4-5]
+  - Variables: item_description,item_photo,item_age,condition_notes,accessories,pickup_area,delivery_option,price_info,selling_reason,time_pressure,interest_signals,
+
 - **[GPT Generator](writing/gpt-generator.md)**
   - Description: Use this prompt to generate other prompts.
-  - Tags: [prompt, prompts, prompt generation]
+  - Tags: [prompt, prompts, prompt-generation]
   - Models: [gpt-5.2, claude-opus-4-5]
   - Variables: variable_name,
 
@@ -38,12 +44,17 @@ Quick reference for finding and discovering prompts in this repository.
   - [analysis/data-summary.md](analysis/data-summary.md)
 - **blog**:
   - [writing/blog-outline.md](writing/blog-outline.md)
-- **generation**:
-  - [writing/gpt-generator.md](writing/gpt-generator.md)
+- **listing**:
+  - [writing/facebook-marketplace-listing.md](writing/facebook-marketplace-listing.md)
+- **marketplace**:
+  - [writing/facebook-marketplace-listing.md](writing/facebook-marketplace-listing.md)
 - **outline**:
   - [writing/blog-outline.md](writing/blog-outline.md)
+- **persuasion**:
+  - [writing/facebook-marketplace-listing.md](writing/facebook-marketplace-listing.md)
 - **prompt**:
   - [writing/gpt-generator.md](writing/gpt-generator.md)
+- **prompt-generation**:
   - [writing/gpt-generator.md](writing/gpt-generator.md)
 - **prompts**:
   - [writing/gpt-generator.md](writing/gpt-generator.md)
@@ -51,6 +62,8 @@ Quick reference for finding and discovering prompts in this repository.
   - [coding/refactor-function.md](coding/refactor-function.md)
 - **risks**:
   - [analysis/data-summary.md](analysis/data-summary.md)
+- **sales**:
+  - [writing/facebook-marketplace-listing.md](writing/facebook-marketplace-listing.md)
 - **step-by-step**:
   - [coding/refactor-function.md](coding/refactor-function.md)
 - **structure**:
@@ -66,11 +79,13 @@ Quick reference for finding and discovering prompts in this repository.
 - [analysis/data-summary.md](analysis/data-summary.md)
 - [coding/refactor-function.md](coding/refactor-function.md)
 - [writing/gpt-generator.md](writing/gpt-generator.md)
+- [writing/facebook-marketplace-listing.md](writing/facebook-marketplace-listing.md)
 - [writing/blog-outline.md](writing/blog-outline.md)
 ### gpt-5.2
 - [analysis/data-summary.md](analysis/data-summary.md)
 - [coding/refactor-function.md](coding/refactor-function.md)
 - [writing/gpt-generator.md](writing/gpt-generator.md)
+- [writing/facebook-marketplace-listing.md](writing/facebook-marketplace-listing.md)
 - [writing/blog-outline.md](writing/blog-outline.md)
 
 ## Quick Search Commands
