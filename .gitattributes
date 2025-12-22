@@ -1,0 +1,9 @@
+# Ensure consistent line endings across platforms
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.sh text eol=lf
+*.json text eol=lf
+
+# Hint linguist and keep scripts as text
+*.sh linguist-language=Shell

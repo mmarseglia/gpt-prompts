@@ -1,0 +1,274 @@
+# JSON Schema for Prompt Frontmatter Validation
+# This schema defines the structure and requirements for prompt metadata
+
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Prompt Frontmatter Schema
+description: Validation schema for prompt YAML frontmatter
+type: object
+
+required:
+  - title
+  - description
+  - use_case
+  - models
+  - tags
+  - version
+  - variables
+  - examples
+
+properties:
+  # Core Required Fields
+  title:
+    type: string
+    minLength: 5
+    maxLength: 100
+    description: Short, descriptive name for the prompt
+    examples:
+      - "Refactor a Function Safely"
+      - "Concise Blog Outline"
+
+  description:
+    type: string
+    minLength: 10
+    maxLength: 200
+    description: One-line summary of what this prompt does
+    examples:
+      - "Stepwise refactor with reasoning, diff, and tests."
+
+  use_case:
+    type: string
+    minLength: 2
+    maxLength: 50
+    description: Category name (should match directory structure)
+    examples:
+      - "coding"
+      - "writing"
+      - "analysis"
+
+  models:
+    type: array
+    minItems: 1
+    description: List of models this prompt is designed for
+    items:
+      type: string
+      pattern: "^[a-z0-9.-]+$"
+    examples:
+      - ["gpt-5.2", "claude-opus-4-5"]
+      - ["claude-opus-4-5"]
+
+  tags:
+    type: array
+    minItems: 1
+    maxItems: 10
+    description: Searchable tags for categorization
+    items:
+      type: string
+      minLength: 2
+      maxLength: 30
+      pattern: "^[a-z0-9-]+$"
+    examples:
+      - ["refactor", "testing", "step-by-step"]
+
+  version:
+    type: string
+    pattern: "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    description: Semantic version number (SemVer)
+    examples:
+      - "1.0.0"
+      - "0.1.0"
+      - "2.3.1"
+
+  # Enhanced Metadata Fields (Optional but Recommended)
+  created:
+    type: string
+    format: date
+    description: Date the prompt was created (YYYY-MM-DD)
+    examples:
+      - "2025-12-22"
+
+  updated:
+    type: string
+    format: date
+    description: Date the prompt was last updated (YYYY-MM-DD)
+    examples:
+      - "2025-12-22"
+
+  author:
+    type: string
+    minLength: 2
+    maxLength: 100
+    description: Username or name of the prompt author
+    examples:
+      - "username"
+      - "repository-maintainer"
+
+  model_versions:
+    type: object
+    description: Specific model versions (legacy field, prefer tested_with)
+    additionalProperties:
+      type: string
+    examples:
+      - gpt-5.2: latest
+
+  tested_with:
+    type: array
+    description: Detailed testing information per model
+    items:
+      type: object
+      required:
+        - model
+        - status
+      properties:
+        model:
+          type: string
+          description: Model name
+        version:
+          type: string
+          description: Specific model version
+        status:
+          type: string
+          enum:
+            - verified
+            - experimental
+            - deprecated
+          description: Testing status
+        last_tested:
+          type: string
+          format: date
+          description: Date of last test (YYYY-MM-DD)
+
+  compatibility_notes:
+    type: string
+    maxLength: 500
+    description: Notes about model-specific behaviors or known issues
+
+  performance_notes:
+    type: string
+    maxLength: 500
+    description: Observations about response time, token usage, etc.
+
+  quality_score:
+    type: number
+    minimum: 0
+    maximum: 10
+    description: Subjective quality rating (0-10 scale)
+    examples:
+      - 8.5
+      - 7.0
+
+  related_prompts:
+    type: array
+    description: Links to similar or complementary prompts
+    items:
+      type: string
+    examples:
+      - ["refactor-class", "improve-naming"]
+
+  # Variables Definition
+  variables:
+    type: array
+    minItems: 1
+    description: List of all variables used in the prompt
+    items:
+      type: object
+      required:
+        - name
+        - required
+        - note
+      properties:
+        name:
+          type: string
+          pattern: "^[a-z_][a-z0-9_]*$"
+          description: Variable name (lowercase, underscores)
+          examples:
+            - "language"
+            - "code_snippet"
+            - "error_message"
+        required:
+          type: boolean
+          description: Whether this variable must be provided
+        type:
+          type: string
+          enum:
+            - string
+            - code
+            - number
+            - boolean
+          description: Expected data type
+        default:
+          type: string
+          description: Default value if not provided
+        validation:
+          type: string
+          maxLength: 200
+          description: Description of valid values or format
+        note:
+          type: string
+          minLength: 5
+          maxLength: 200
+          description: Human-readable explanation of the variable
+
+  # Examples Section
+  examples:
+    type: array
+    minItems: 1
+    description: Test cases with expected behavior
+    items:
+      type: object
+      required:
+        - input
+        - expected_behavior
+      properties:
+        input:
+          type: string
+          minLength: 5
+          description: Example input with variable values
+        expected_behavior:
+          type: string
+          minLength: 10
+          description: What a good response should include
+        model_tested:
+          type: string
+          description: Which model this example was tested with
+        test_date:
+          type: string
+          format: date
+          description: When this example was last tested
+        actual_output:
+          type: string
+          description: Optional actual output from testing
+
+# Additional Properties
+additionalProperties: false
+
+# Examples of Valid Frontmatter
+examples:
+  - title: "Refactor a Function Safely"
+    description: "Stepwise refactor with reasoning, diff, and tests."
+    use_case: "coding"
+    models: ["gpt-5.2", "claude-opus-4-5"]
+    tags: ["refactor", "testing", "step-by-step"]
+    version: "1.0.0"
+    created: "2024-12-01"
+    updated: "2025-12-22"
+    author: "repository-maintainer"
+    tested_with:
+      - model: "gpt-5.2"
+        version: "latest"
+        status: "experimental"
+        last_tested: "2025-12-22"
+    quality_score: 8.5
+    variables:
+      - name: "language"
+        required: true
+        type: "string"
+        note: "Programming language of the snippet"
+      - name: "code"
+        required: true
+        type: "code"
+        note: "The code to refactor"
+    examples:
+      - input: "language: Python\ncode: def add(a,b):return a+b"
+        expected_behavior: "Explains plan, rewrites with clarity, suggests tests"
+        model_tested: "gpt-5.2"
+        test_date: "2025-12-22"
