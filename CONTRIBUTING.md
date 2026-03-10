@@ -8,11 +8,13 @@ Thank you for contributing to this prompt repository! This guide will help you a
 # Create a new prompt
 scripts/new-prompt.sh <category> <name>
 
-# Edit the generated file
-# Fill in metadata and write prompt content
+# Create a new skill
+scripts/new-skill.sh <skill-name>
 
 # Validate before committing
 tests/validate-prompt.sh prompts/<category>/<name>.md
+tests/validate-skill.sh skills/updated-skills/<skill-name>/SKILL.md
+tests/validate-all.sh
 
 # Update the index
 scripts/generate-index.sh
@@ -136,6 +138,71 @@ If this is a collaborative repository:
 2. Commit your changes: `git commit -m "Add debug-error prompt for coding"`
 3. Push and create a pull request
 4. Wait for review and address feedback
+
+## Adding a New Skill
+
+### 1. Create the Skill Directory
+
+**Option A: Use the helper script (recommended)**
+```bash
+scripts/new-skill.sh my-new-skill
+```
+
+**Option B: Manual creation**
+```bash
+mkdir -p skills/updated-skills/my-new-skill
+cp skills/_template/SKILL.md skills/updated-skills/my-new-skill/SKILL.md
+```
+
+### 2. Fill in the Frontmatter
+
+Complete the required fields in the YAML frontmatter:
+
+```yaml
+---
+name: my-new-skill
+description: Describe what the skill does. Include trigger phrases like "use when the user asks to ..." so the skill is invoked correctly.
+---
+```
+
+- `name` must match the directory name (lowercase, hyphens allowed).
+- `description` should include verbs and phrases that trigger the skill.
+
+### 3. Write the Skill Body
+
+Organize the skill instructions with these sections:
+
+```markdown
+# Skill Title
+
+You are a [role]. [Brief mandate].
+
+## Process
+Describe the step-by-step workflow.
+
+## Output
+Describe the expected output format.
+
+## Standards
+List quality requirements.
+
+## Changelog
+- 0.1.0 (YYYY-MM-DD): Initial version
+```
+
+Optionally create a `references/` subdirectory for supporting materials.
+
+### 4. Validate the Skill
+
+```bash
+tests/validate-skill.sh skills/updated-skills/my-new-skill/SKILL.md
+```
+
+### 5. Update the Index
+
+```bash
+scripts/generate-index.sh
+```
 
 ## Prompt Quality Checklist
 
@@ -363,10 +430,30 @@ Example deprecation notice:
 - Document your changes clearly
 - Credit others' work when building on it
 
+## Skill Quality Checklist
+
+Before submitting a skill:
+
+### Metadata
+- [ ] `name` matches the directory name
+- [ ] `description` includes trigger phrases
+- [ ] `description` is at least 10 characters
+
+### Content
+- [ ] Clear role and mandate in the opening
+- [ ] Process section describes the workflow
+- [ ] Output section specifies the expected format
+- [ ] Standards section lists quality requirements
+- [ ] Changelog started with initial version
+
+### Validation
+- [ ] Passes `tests/validate-skill.sh`
+- [ ] INDEX.md regenerated with `scripts/generate-index.sh`
+
 ## Getting Help
 
 - Check the [README.md](README.md) for usage guidelines
-- Review existing prompts for examples
+- Review existing prompts and skills for examples
 - Read [tests/README.md](tests/README.md) for testing guidance
 - Look at [docs/MODEL_COMPATIBILITY.md](docs/MODEL_COMPATIBILITY.md) for model info
 

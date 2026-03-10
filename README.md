@@ -13,18 +13,26 @@ Lightweight structure for storing, discovering, and iterating on generative AI p
 ```
 gpt-prompts/
 ├── prompts/              # Prompt files grouped by use case
-│   ├── INDEX.md         # Searchable catalog of all prompts
+│   ├── INDEX.md         # Searchable catalog (prompts + skills)
 │   ├── _template.md     # Template for new prompts
 │   ├── coding/          # Code-related prompts
 │   ├── writing/         # Content creation prompts
 │   └── analysis/        # Data analysis prompts
+├── skills/               # Claude/Copilot skills
+│   ├── _template/       # Template for new skills
+│   │   └── SKILL.md
+│   └── updated-skills/  # Active skill definitions
+│       ├── prompt-generator/
+│       ├── prompt-judge/
+│       └── prompt-optimizer/
 ├── tests/               # Validation scripts and test runs
 │   ├── validate-prompt.sh
+│   ├── validate-skill.sh
 │   ├── validate-all.sh
 │   └── example-runs/    # Documented test executions
-├── scripts/             # Helper scripts for prompt management
+├── scripts/             # Helper scripts for prompt and skill management
 ├── docs/                # Additional documentation
-└── schema/              # Validation schemas
+└── schema/              # Validation schemas (prompts + skills)
 ```
 
 ## Prompt Format
@@ -102,6 +110,36 @@ Replace:
 | [refactor-function](prompts/coding/refactor-function.md) | Coding | gpt-5.2, claude-opus-4-5 | language, code |
 | [blog-outline](prompts/writing/blog-outline.md) | Writing | gpt-5.2, claude-opus-4-5 | topic, audience, goal |
 | [data-summary](prompts/analysis/data-summary.md) | Analysis | gpt-5.2, claude-opus-4-5 | context, metrics, audience |
+
+## Skills
+
+Skills are Claude/Copilot instruction files that extend AI assistant capabilities. Each skill lives in its own directory under `skills/updated-skills/` as a `SKILL.md` file with YAML frontmatter.
+
+| Skill | Description |
+|-------|-------------|
+| [prompt-generator](skills/updated-skills/prompt-generator/SKILL.md) | Guide users through prompt creation via discovery → synthesis → iteration |
+| [prompt-judge](skills/updated-skills/prompt-judge/SKILL.md) | Evaluate and refine prompts for production deployment |
+| [prompt-optimizer](skills/updated-skills/prompt-optimizer/SKILL.md) | Optimize prompts for token efficiency while preserving functionality |
+
+### Skill Format
+
+Every skill is a `SKILL.md` file with YAML frontmatter. See [skills/_template/SKILL.md](skills/_template/SKILL.md) for the full template.
+
+```yaml
+---
+name: skill-name
+description: What this skill does. Include trigger phrases for invocation.
+---
+```
+
+### Adding a New Skill
+
+```bash
+scripts/new-skill.sh my-new-skill
+# Edit skills/updated-skills/my-new-skill/SKILL.md
+tests/validate-skill.sh skills/updated-skills/my-new-skill/SKILL.md
+scripts/generate-index.sh
+```
 
 ## Search Strategies
 
@@ -191,14 +229,17 @@ Use tags for fine-grained search:
 
 ## Validation
 
-Validation uses the schema in `schema/prompt-schema.yaml` via the Ruby stdlib validator (`tests/validate-frontmatter.rb`); no extra gems required.
+Validation uses schemas in `schema/` via Node.js validators (built-ins only; no external dependencies).
 
 ### Before Committing
 ```bash
 # Validate a single prompt
 tests/validate-prompt.sh prompts/coding/my-prompt.md
 
-# Validate all prompts
+# Validate a single skill
+tests/validate-skill.sh skills/updated-skills/my-skill/SKILL.md
+
+# Validate all prompts and skills
 tests/validate-all.sh
 ```
 

@@ -37,6 +37,12 @@ Quick reference for finding and discovering prompts in this repository.
   - Models: [gpt-5.2, claude-opus-4-5]
   - Variables: variable_name,
 
+- **[Project Management Mentor for Event Planning](writing/project-management-mentor-event-planning.md)**
+  - Description: Mentor-style prompt to guide volunteer event planners through project management for a one-day training session.
+  - Tags: [project-management,event-planning,mentoring,scouting]
+  - Models: [gpt-5.2]
+  - Variables: project_name,event_date,event_location,target_audience,expected_attendance,project_goal,your_role,key_stakeholders,budget,confirmed_resources,known_constraints,current_status,communication_channels,your_pm_experience_level,mentoring_style_preference,project_name,event_date,event_location,target_audience,expected_attendance,project_goal,your_role,key_stakeholders,budget,confirmed_resources,known_constraints,current_status,communication_channels,your_pm_experience_level,mentoring_style_preference,
+
 
 ## By Tag
 
@@ -44,14 +50,20 @@ Quick reference for finding and discovering prompts in this repository.
   - [analysis/data-summary.md](analysis/data-summary.md)
 - **blog**:
   - [writing/blog-outline.md](writing/blog-outline.md)
+- **event-planning**:
+  - [writing/project-management-mentor-event-planning.md](writing/project-management-mentor-event-planning.md)
 - **listing**:
   - [writing/facebook-marketplace-listing.md](writing/facebook-marketplace-listing.md)
 - **marketplace**:
   - [writing/facebook-marketplace-listing.md](writing/facebook-marketplace-listing.md)
+- **mentoring**:
+  - [writing/project-management-mentor-event-planning.md](writing/project-management-mentor-event-planning.md)
 - **outline**:
   - [writing/blog-outline.md](writing/blog-outline.md)
 - **persuasion**:
   - [writing/facebook-marketplace-listing.md](writing/facebook-marketplace-listing.md)
+- **project-management**:
+  - [writing/project-management-mentor-event-planning.md](writing/project-management-mentor-event-planning.md)
 - **prompt**:
   - [writing/gpt-generator.md](writing/gpt-generator.md)
 - **prompt-generation**:
@@ -64,6 +76,8 @@ Quick reference for finding and discovering prompts in this repository.
   - [analysis/data-summary.md](analysis/data-summary.md)
 - **sales**:
   - [writing/facebook-marketplace-listing.md](writing/facebook-marketplace-listing.md)
+- **scouting**:
+  - [writing/project-management-mentor-event-planning.md](writing/project-management-mentor-event-planning.md)
 - **step-by-step**:
   - [coding/refactor-function.md](coding/refactor-function.md)
 - **structure**:
@@ -85,6 +99,7 @@ Quick reference for finding and discovering prompts in this repository.
 - [analysis/data-summary.md](analysis/data-summary.md)
 - [coding/refactor-function.md](coding/refactor-function.md)
 - [writing/gpt-generator.md](writing/gpt-generator.md)
+- [writing/project-management-mentor-event-planning.md](writing/project-management-mentor-event-planning.md)
 - [writing/facebook-marketplace-listing.md](writing/facebook-marketplace-listing.md)
 - [writing/blog-outline.md](writing/blog-outline.md)
 
@@ -111,5 +126,19 @@ grep -r "required: false" prompts/ --include="*.md"
 ```
 
 ---
-*Last updated: 2025-12-22*
+
+## Skills
+
+Claude/Copilot skills that extend AI assistant capabilities.
+
+- **[prompt-generator](../skills/updated-skills/prompt-generator/SKILL.md)**
+  - Generate production-quality prompts through structured discovery.
+
+- **[prompt-judge](../skills/updated-skills/prompt-judge/SKILL.md)**
+  - Evaluate and refine prompts for production deployment.
+
+- **[prompt-optimizer](../skills/updated-skills/prompt-optimizer/SKILL.md)**
+  - Optimize prompts for token efficiency while preserving functionality.
+
+*Last updated: 2026-03-09*
 *To regenerate: `scripts/generate-index.sh`*

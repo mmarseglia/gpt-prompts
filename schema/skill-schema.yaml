@@ -1,0 +1,51 @@
+# JSON Schema for Skill Frontmatter Validation
+# Defines the structure and requirements for SKILL.md YAML frontmatter
+
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Skill Frontmatter Schema
+description: Validation schema for SKILL.md YAML frontmatter
+type: object
+
+required:
+  - name
+  - description
+
+properties:
+  name:
+    type: string
+    minLength: 2
+    maxLength: 50
+    pattern: "^[a-z][a-z0-9-]*$"
+    description: >
+      Skill identifier (lowercase, hyphens). Must match the containing
+      directory name under skills/updated-skills/.
+    examples:
+      - "prompt-generator"
+      - "prompt-judge"
+      - "prompt-optimizer"
+
+  description:
+    type: string
+    minLength: 10
+    maxLength: 500
+    description: >
+      One-line summary including trigger phrases so the skill is invoked
+      correctly. Should mention key verbs and phrases users might say.
+    examples:
+      - "Generate production-quality prompts through structured discovery. Use when users ask to create, write, build, or develop a prompt."
+
+  version:
+    type: string
+    pattern: "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    description: Optional semantic version number
+    examples:
+      - "1.0.0"
+      - "0.1.0"
+
+additionalProperties: false
+
+examples:
+  - name: "prompt-generator"
+    description: "Generate production-quality prompts through structured discovery. Use when users ask to create, write, build, or develop a prompt."
+  - name: "prompt-judge"
+    description: "Evaluate and refine prompts for production deployment. Use when the user asks to evaluate, review, judge, or refine a prompt."

@@ -1,11 +1,12 @@
-# Prompt Schema Documentation
+# Schema Documentation
 
-This directory contains the JSON Schema definition for validating prompt frontmatter.
+This directory contains JSON Schema definitions for validating prompt and skill frontmatter.
 
 ## Files
 
-- `prompt-schema.yaml`: JSON Schema definition in YAML format for readability
-- `prompt-schema.json`: (Optional) JSON version of the schema for tooling
+- `prompt-schema.yaml`: JSON Schema for prompt YAML frontmatter
+- `skill-schema.yaml`: JSON Schema for skill YAML frontmatter
+- `prompt-schema.json`: (Optional) JSON version of the prompt schema for tooling
 
 ## Using the Schema
 
@@ -53,6 +54,14 @@ for file in $(git diff --cached --name-only | grep "^prompts/.*\.md$"); do
   if [ -f "$file" ]; then
     echo "Validating $file..."
     ./tests/validate-prompt.sh "$file" || exit 1
+  fi
+done
+
+# Validate all staged skill files
+for file in $(git diff --cached --name-only | grep "^skills/updated-skills/.*/SKILL\.md$"); do
+  if [ -f "$file" ]; then
+    echo "Validating $file..."
+    ./tests/validate-skill.sh "$file" || exit 1
   fi
 done
 ```
@@ -216,6 +225,41 @@ The schema itself should be versioned if breaking changes occur:
 **IDE Extensions:**
 - VS Code: "YAML" by Red Hat
 - IntelliJ: Built-in JSON Schema support
+
+## Skill Schema Fields Reference
+
+### Required Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `name` | string | Skill identifier (2-50 chars, lowercase with hyphens) |
+| `description` | string | Summary with trigger phrases (10-500 chars) |
+
+### Optional Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `version` | string | SemVer version (e.g., "1.0.0") |
+
+### Skill Validation Rules
+
+#### Name
+- Pattern: `^[a-z][a-z0-9-]*$`
+- Must match the containing directory name under `skills/updated-skills/`
+- Length: 2-50 characters
+- Good: `prompt-generator`, `code-reviewer`
+- Bad: `Prompt_Generator`, `my skill`
+
+#### Description
+- Length: 10-500 characters
+- Should include trigger phrases so the skill is invoked correctly
+- Example: "Generate prompts. Use when users ask to create, write, or develop a prompt."
+
+### Validating a Skill
+
+```bash
+./tests/validate-skill.sh skills/updated-skills/my-skill/SKILL.md
+```
 
 ## Future Enhancements
 

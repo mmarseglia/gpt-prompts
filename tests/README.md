@@ -17,9 +17,22 @@ Validates a single prompt file via the schema-aware JavaScript validator:
 ./tests/validate-prompt.sh prompts/coding/refactor-function.md
 ```
 
+### validate-skill.sh
+
+Validates a single `SKILL.md` file via the skill schema validator:
+- Checks YAML frontmatter structure
+- Ensures required fields exist (`name`, `description`)
+- Validates name pattern (lowercase, hyphens) and directory-name match
+- Uses `tests/validate-skill-frontmatter.js` (Node.js built-ins only; no external dependencies required)
+
+**Usage:**
+```bash
+./tests/validate-skill.sh skills/updated-skills/prompt-generator/SKILL.md
+```
+
 ### validate-all.sh
 
-Validates all prompts in the repository and provides a summary report.
+Validates all prompts and skills in the repository and provides a summary report.
 
 **Usage:**
 ```bash
@@ -92,13 +105,16 @@ Each test run should include:
 
 ### Before Committing
 
-Always validate prompts before committing:
+Always validate before committing:
 
 ```bash
 # Validate a single prompt
 ./tests/validate-prompt.sh prompts/coding/your-new-prompt.md
 
-# Validate all prompts
+# Validate a single skill
+./tests/validate-skill.sh skills/updated-skills/your-new-skill/SKILL.md
+
+# Validate all prompts and skills
 ./tests/validate-all.sh
 ```
 

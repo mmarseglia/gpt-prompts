@@ -163,6 +163,38 @@ grep -r "required: false" prompts/ --include="*.md"
 ---
 EOF
 
+# Add Skills section
+SKILLS_DIR="$REPO_ROOT/skills/updated-skills"
+if [ -d "$SKILLS_DIR" ]; then
+  skill_files=("$SKILLS_DIR"/*/SKILL.md)
+  if [ -f "${skill_files[0]}" ]; then
+    cat >> "$INDEX_FILE" << 'EOF'
+
+## Skills
+
+Claude/Copilot skills that extend AI assistant capabilities.
+
+EOF
+
+    for skill_file in "$SKILLS_DIR"/*/SKILL.md; do
+      if [ -f "$skill_file" ]; then
+        skill_dir=$(basename "$(dirname "$skill_file")")
+        skill_name=$(get_field "$skill_file" "name")
+        skill_desc=$(get_field "$skill_file" "description")
+        # Truncate description to first sentence
+        skill_desc_short=$(echo "$skill_desc" | sed 's/\. .*/./; s/^"//; s/"$//')
+
+        relative_path="../skills/updated-skills/$skill_dir/SKILL.md"
+        cat >> "$INDEX_FILE" << EOF
+- **[$skill_name]($relative_path)**
+  - $skill_desc_short
+
+EOF
+      fi
+    done
+  fi
+fi
+
 # Add footer with date
 echo "*Last updated: $(date +%Y-%m-%d)*" >> "$INDEX_FILE"
 echo "*To regenerate: \`scripts/generate-index.sh\`*" >> "$INDEX_FILE"
