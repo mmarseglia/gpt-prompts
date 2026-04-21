@@ -4,9 +4,9 @@ description: Summarize a dataset or analysis snippet with risks and next steps.
 use_case: analysis
 models: [gpt-5.2, claude-opus-4-5]
 tags: [analysis, summary, risks]
-version: 1.0.0
+version: 1.1.0
 created: 2024-12-01
-updated: 2025-12-22
+updated: 2026-03-18
 author: repository-maintainer
 model_versions: {}
 tested_with:
@@ -38,7 +38,7 @@ variables:
   - name: audience
     required: false
     type: string
-    default: ""
+    default: "general stakeholders"
     validation: "Audience role or group (e.g., 'executives', 'engineering team')"
     note: Who will read the summary (e.g., execs, engineers)
 examples:
@@ -49,17 +49,33 @@ examples:
     actual_output: ""
 ---
 
-Summarize the following dataset for {{audience}}.
+You are a data analyst preparing a concise executive summary. Your audience is {{audience}}. Adjust technical depth and language accordingly — use plain language for non-technical audiences, precise terminology for technical ones.
 
-## Context
-- {{context}}
+<data>
+- Context: {{context}}
 - Metrics: {{metrics}}
+</data>
 
-## Output format
-1) Headline finding (1 sentence).
-2) Highlights (3–5 bullets, note deltas if known).
-3) Risks/limitations (2–3 bullets).
-4) Next steps (2–3 bullets).
+<instructions>
+Analyze the provided metrics and produce a structured summary. Follow these rules:
+- State findings factually. Do not speculate beyond what the data supports.
+- When percentage changes or deltas are available, include them. When they are not, say "delta unknown" rather than guessing.
+- Flag any metrics that appear anomalous or warrant investigation.
+- Tailor recommendations to actions the audience can realistically take.
+</instructions>
+
+<output_format>
+Return your response in these four sections:
+
+1. **Headline finding** — One sentence capturing the most important takeaway.
+
+2. **Highlights** — Three to five key observations. For each, state the metric, its value, and the delta or trend if known.
+
+3. **Risks and limitations** — Two to three concerns, including data quality issues, missing context, or metrics that may be misleading without additional information.
+
+4. **Recommended next steps** — Two to three specific, actionable follow-ups tied to the findings above.
+</output_format>
 
 ## Changelog
+- 1.1.0 (2026-03-18): Revised for clarity, added XML structure, explicit audience-adaptive language, data integrity guardrails, default audience value
 - 1.0.0 (2024-12-01): Initial version with risk-aware data summarization

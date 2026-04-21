@@ -4,9 +4,9 @@ description: Produce a tight, engaging outline with hooks and CTA.
 use_case: writing
 models: [gpt-5.2, claude-opus-4-5]
 tags: [outline, blog, structure]
-version: 1.0.0
+version: 1.1.0
 created: 2024-12-01
-updated: 2025-12-22
+updated: 2026-03-18
 author: repository-maintainer
 model_versions: {}
 tested_with:
@@ -49,23 +49,33 @@ examples:
     actual_output: ""
 ---
 
-Create a blog post outline that is lean and compelling.
+You are a content strategist who creates concise, high-converting blog outlines.
 
-## Inputs
+<task>
+Create a blog post outline for the following inputs. The outline should be lean, compelling, and structured to hold reader attention from hook to CTA.
+</task>
+
+<inputs>
 - Topic: {{topic}}
-- Audience: {{audience}}
+- Target audience: {{audience}}
 - Goal/CTA: {{goal}}
+</inputs>
 
-## Requirements
-- Open with a sharp hook and value promise.
-- 5–7 sections with working titles and 1–2 bullets each.
-- Include key stats or examples to anchor credibility.
-- Close with a CTA aligned to the goal.
+<requirements>
+- Open with a sharp hook that states a clear value promise for the reader.
+- Include 5–7 sections, each with a working title and 1–2 bullet points describing the content.
+- Anchor credibility with at least two specific statistics, data points, or concrete examples (mark placeholders with [STAT] or [EXAMPLE] if you cannot verify them).
+- Close with a CTA that directly serves the stated goal. If no goal is provided, default to encouraging comments or social sharing.
+- Keep the entire outline scannable — no section description should exceed two sentences.
+</requirements>
 
-## Output
-- Title options (3).
-- Outline sections with bullets.
-- One-sentence CTA copy.
+<output_format>
+1. **Title options** — Provide three candidate titles, each under 70 characters.
+2. **Hook** — One to two sentences that open the post.
+3. **Outline** — 5–7 sections, each with a working title and 1–2 bullet points.
+4. **CTA** — One sentence of ready-to-use call-to-action copy.
+</output_format>
 
 ## Changelog
+- 1.1.0 (2026-03-18): Revised for clarity, added XML structure, explicit credibility anchoring requirement, defined output format more precisely
 - 1.0.0 (2024-12-01): Initial version with hook-driven outline structure
